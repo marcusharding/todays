@@ -2,15 +2,9 @@ import { useGlobalStore } from '~/store/global';
 
 export const useMeta = (metadata = {}, data = {}) => {
     const globalStore = useGlobalStore();
-    const metaImage = globalStore?.siteSettings?.metaImage?.url || '';
-
-    const getMetaData = () => ({
-        title: metadata?.title || data?.title || '',
-        description: metadata?.description || data?.description || '',
-        image: metadata?.imageUrl || metaImage
-    });
-
-    const { title, description, image } = getMetaData();
+    const image = globalStore?.siteSettings?.metaImage?.url || '';
+    const title = globalStore?.siteSettings?.metaTitle || '';
+    const description = globalStore?.siteSettings?.metaDescription || '';
 
     useHead({
         title,

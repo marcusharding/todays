@@ -26,8 +26,7 @@ useMeta(meta?.value?.metaData, data?.value);
 
 // METHODS
 const quoteOfTheDay = computed(() => {
-
-    if (!data.value || data.value.length === 0) return null;
+    if (!data.value || data.value.length === 0) return undefined;
 
     const today = new Date();
 
@@ -38,11 +37,9 @@ const quoteOfTheDay = computed(() => {
     const quoteIndex = dayOfYear % data.value.length;
     return data.value[quoteIndex];
 });
-
 </script>
 
 <style lang="scss" scoped>
-
 .index.container {
     height: 100vh;
     height: 100dvh;
@@ -57,5 +54,4 @@ const quoteOfTheDay = computed(() => {
     @include typography('heading-4');
     font-weight: 500;
 }
-
 </style>

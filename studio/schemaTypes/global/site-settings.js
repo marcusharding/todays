@@ -8,6 +8,16 @@ export default {
             type: 'image',
             title: 'Global Meta Image',
             description: 'Image Size: 1200 x 600.'
+        },
+        {
+            name: 'metaTitle',
+            type: 'string',
+            title: 'Meta Title'
+        },
+        {
+            name: 'metaDescription',
+            type: 'string',
+            title: 'Meta Description'
         }
     ],
     preview: {

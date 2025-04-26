@@ -3,6 +3,8 @@ export const siteSettingsQuery = () => /* groq */ `
         metaImage {
             "asset": asset->,
             "url": asset->url
-        }
+        },
+        metaTitle,
+        metaDescription
     }[0]
 `;
