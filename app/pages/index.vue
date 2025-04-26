@@ -51,7 +51,10 @@ const quoteOfTheDay = computed(() => {
 }
 
 .index p {
-    @include typography('heading-4');
-    font-weight: 500;
+    @include typography('heading-6');
+
+    @include laptop-up {
+        @include typography('heading-4');
+    }
 }
 </style>
