@@ -42,7 +42,6 @@ const quoteOfTheDay = computed(() => {
 <style lang="scss" scoped>
 .index.container {
     height: 100vh;
-    height: 100dvh;
     width: 100%;
 
     display: flex;
