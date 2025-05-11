@@ -8,6 +8,7 @@
 // QUERIES
 import { homepageQuery } from '~/queries/pages/homepage';
 import { metaQuery } from '~/queries/helpers/pageMeta';
+import { onMounted } from 'vue';
 
 // DATA
 const { data, error: dataError } = await useSanityQuery(homepageQuery);
@@ -37,11 +38,24 @@ const quoteOfTheDay = computed(() => {
     const quoteIndex = dayOfYear % data.value.length;
     return data.value[quoteIndex];
 });
+
+const setVh = () => {
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+};
+
+onMounted(() => {
+    setVh();
+    window.addEventListener('resize', setVh);
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener('resize', setVh);
+});
 </script>
 
 <style lang="scss" scoped>
 .index.container {
-    height: 100vh;
+    height: 100dvh;
     width: 100%;
 
     display: flex;
