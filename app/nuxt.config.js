@@ -87,6 +87,7 @@ export default defineNuxtConfig({
         '@nuxt/image',
         'nuxt-gtag',
         '@nuxtjs/sitemap',
+        '@vite-pwa/nuxt',
         [
             '@nuxtjs/robots',
             {
@@ -98,6 +99,50 @@ export default defineNuxtConfig({
             }
         ]
     ],
+
+    pwa: {
+        manifest: {
+            name: 'Quote of the Day',
+            short_name: 'DailyQuote',
+            description: 'A fresh quote every day',
+            lang: 'en',
+            start_url: '/',
+            display: 'standalone',
+            background_color: '#ffffff',
+            theme_color: '#222222',
+            icons: [
+                {
+                    src: '/android-chrome-192x192.png',
+                    sizes: '192x192',
+                    type: 'image/png'
+                },
+                {
+                    src: '/android-chrome-512x512.png',
+                    sizes: '512x512',
+                    type: 'image/png'
+                },
+                {
+                    src: '/android-chrome-512x512-maskable.png',
+                    sizes: '512x512',
+                    type: 'image/png',
+                    purpose: 'maskable'
+                }
+            ]
+        },
+
+        workbox: {
+            runtimeCaching: [
+                {
+                    urlPattern: '^https://todays-quote\\.net(/|/api/quote)',
+                    handler: 'NetworkFirst',
+                    options: {
+                        cacheName: 'quote-cache',
+                        expiration: { maxEntries: 2, maxAgeSeconds: 86400 }
+                    }
+                }
+            ]
+        }
+    },
 
     plugins: [
         '~/plugins/sanity.js',

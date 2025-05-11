@@ -105,6 +105,7 @@ export default withNuxt({
       defineNuxtPlugin: "readonly",
       process: "readonly",
       useSanity: "readonly",
+      useSanityQuery: "readonly",
       useRoute: 'readonly',
       useAsyncData: 'readonly',
       useMeta: 'readonly',
