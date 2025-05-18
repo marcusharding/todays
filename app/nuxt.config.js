@@ -108,8 +108,8 @@ export default defineNuxtConfig({
             lang: 'en',
             start_url: '/',
             display: 'standalone',
-            background_color: '#f5f4f3',
-            theme_color: '#f5f4f3',
+            background_color: '#F2EFED',
+            theme_color: '#F2EFED',
             icons: [
                 {
                     src: '/android-chrome-192x192.png',
