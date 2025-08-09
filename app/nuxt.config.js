@@ -31,6 +31,10 @@ export default defineNuxtConfig({
                 {
                     name: 'format-detection',
                     content: 'telephone=no'
+                },
+                {
+                    name: 'theme-color',
+                    content: '#F2EFED'
                 }
             ],
             link: [

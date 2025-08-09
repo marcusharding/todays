@@ -17,9 +17,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss" scoped>
-.default {
-    background-color: #f2efed;
-}
-</style>
