@@ -122,6 +122,8 @@ onBeforeUnmount(() => {
         cursor: pointer;
         user-select: none;
         transition: opacity 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+        tap-highlight-color: transparent;
 
         &:hover {
             opacity: 0.8;
