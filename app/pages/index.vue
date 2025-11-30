@@ -1,6 +1,8 @@
 <template>
     <div class="index container site-content-container">
-        <p>{{ quoteOfTheDay?.quote }}</p>
+        <p class="clickable" @click="handleClick">
+            {{ showEasterEgg ? whatImWorkingOn : quoteOfTheDay?.quote }}
+        </p>
     </div>
 </template>
 
@@ -8,7 +10,8 @@
 // QUERIES
 import { homepageQuery } from '~/queries/pages/homepage';
 import { metaQuery } from '~/queries/helpers/pageMeta';
-import { onMounted } from 'vue';
+import { onMounted, ref, computed } from 'vue';
+import { useGlobalStore } from '~/store/global';
 
 // DATA
 const { data, error: dataError } = await useSanityQuery(homepageQuery);
@@ -25,7 +28,15 @@ if (metaError.value) {
 // META
 useMeta(meta?.value?.metaData, data?.value);
 
-// METHODS
+// STORE
+const globalStore = useGlobalStore();
+
+// EASTER EGG STATE
+const clickCount = ref(0);
+const showEasterEgg = ref(false);
+let clickTimeout = undefined;
+
+// COMPUTED
 const quoteOfTheDay = computed(() => {
     const list = data.value || [];
     if (!list.length) return undefined;
@@ -47,6 +58,31 @@ const quoteOfTheDay = computed(() => {
     return list[dayOfYear % list.length];
 });
 
+const whatImWorkingOn = computed(() => {
+    return globalStore.siteSettings?.whatImWorkingOn || 'Nothing specific at the moment.';
+});
+
+// METHODS
+const handleClick = () => {
+    clickCount.value++;
+
+    // Clear existing timeout
+    if (clickTimeout) {
+        clearTimeout(clickTimeout);
+    }
+
+    // If 10 clicks reached, show easter egg
+    if (clickCount.value >= 10) {
+        showEasterEgg.value = true;
+        clickCount.value = 0;
+    } else {
+        // Reset click count after 2 seconds of inactivity
+        clickTimeout = window.setTimeout(() => {
+            clickCount.value = 0;
+        }, 2000);
+    }
+};
+
 const setVh = () => {
     document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
 };
@@ -58,6 +94,9 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
     window.removeEventListener('resize', setVh);
+    if (clickTimeout) {
+        clearTimeout(clickTimeout);
+    }
 });
 </script>
 
@@ -76,6 +115,17 @@ onBeforeUnmount(() => {
 
     @include laptop-up {
         @include typography('heading-4');
+        text-align: center;
+    }
+
+    &.clickable {
+        cursor: pointer;
+        user-select: none;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+            opacity: 0.8;
+        }
     }
 }
 </style>

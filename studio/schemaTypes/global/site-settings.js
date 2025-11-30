@@ -18,6 +18,12 @@ export default {
             name: 'metaDescription',
             type: 'string',
             title: 'Meta Description'
+        },
+        {
+            name: 'whatImWorkingOn',
+            type: 'text',
+            title: 'What I\'m Working On',
+            description: 'A field to periodically update with what you\'re currently working on'
         }
     ],
     preview: {

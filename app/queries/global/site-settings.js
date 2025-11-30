@@ -5,6 +5,7 @@ export const siteSettingsQuery = () => /* groq */ `
             "url": asset->url
         },
         metaTitle,
-        metaDescription
+        metaDescription,
+        whatImWorkingOn
     }[0]
 `;
