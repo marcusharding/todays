@@ -1,4 +1,4 @@
-import {FaFolderOpen, FaSlidersH} from 'react-icons/fa';
+import {FaFolderOpen, FaSlidersH, FaQuoteLeft, FaQuestion, FaLightbulb} from 'react-icons/fa';
 
 export const deskStructure = (S, context) => {
     return S.list()
@@ -16,7 +16,19 @@ export const deskStructure = (S, context) => {
             // Quotes
             S.listItem()
                 .title('Quotes')
-                .icon(FaFolderOpen)
-                .child(S.documentTypeList('quote').title('All Quotes'))
+                .icon(FaQuoteLeft)
+                .child(S.documentTypeList('quote').title('All Quotes')),
+
+            // Questions
+            S.listItem()
+                .title('Questions')
+                .icon(FaQuestion)
+                .child(S.documentTypeList('question').title('All Questions')),
+
+            // Reflections
+            S.listItem()
+                .title('Reflections')
+                .icon(FaLightbulb)
+                .child(S.documentTypeList('reflection').title('All Reflections'))
         ]);
 };

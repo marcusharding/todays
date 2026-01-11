@@ -1,9 +1,11 @@
 <template>
-    <div class="default">
-        <main>
-            <slot />
-        </main>
-    </div>
+    <PinGate>
+        <div class="default">
+            <main>
+                <slot />
+            </main>
+        </div>
+    </PinGate>
 </template>
 
 <script>
