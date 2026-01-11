@@ -22,8 +22,8 @@ export default {
         {
             name: 'whatImWorkingOn',
             type: 'text',
-            title: 'What I\'m Working On',
-            description: 'A field to periodically update with what you\'re currently working on'
+            title: "What I'm Working On",
+            description: "A field to periodically update with what you're currently working on"
         }
     ],
     preview: {

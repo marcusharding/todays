@@ -56,7 +56,7 @@ onMounted(() => {
 .pin-gate {
     position: fixed;
     inset: 0;
-    background: color(TrueBlack);
+    background: #f2efed;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,35 +67,47 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
+    padding: 24px;
+
+    @include laptop-up {
+        padding: 40px;
+    }
 }
 
 .pin-input {
     background: transparent;
     border: none;
-    border-bottom: 2px solid color(TrueWhite, 0.3);
-    color: color(TrueWhite);
-    font-size: 2rem;
+    border-bottom: 2px solid color(AlmostBlack, 0.2);
+    color: color(AlmostBlack);
     text-align: center;
-    width: 120px;
-    padding: 0.5rem;
+    width: 140px;
+    padding: 0.75rem;
     letter-spacing: 0.5rem;
     outline: none;
     transition: border-color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+
+    @include typography('heading-6');
+
+    @include laptop-up {
+        @include typography('heading-5');
+        width: 180px;
+    }
 
     &:focus {
-        border-color: color(TrueWhite, 0.6);
+        border-color: color(AlmostBlack, 0.5);
     }
 
     &::placeholder {
-        color: color(TrueWhite, 0.3);
+        color: color(AlmostBlack, 0.3);
         letter-spacing: normal;
     }
 }
 
 .pin-error {
-    color: #ff6b6b;
-    font-size: 0.875rem;
+    @include typography('body-s');
+    color: color(AlmostBlack, 0.6);
     margin: 0;
 }
 </style>
