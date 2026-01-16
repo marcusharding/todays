@@ -21,7 +21,8 @@ export const useGlobalStore = defineStore('global', {
                 }
 
                 const result = await $sanity.fetch(query());
-                return result || {};
+                // Normalize Sanity objects to fix Pinia hydration issues
+                return result ? JSON.parse(JSON.stringify(result)) : {};
             } catch (error) {
                 console.error(`Error fetching data: ${error.message}`);
                 return {};

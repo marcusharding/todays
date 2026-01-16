@@ -79,30 +79,31 @@ if (typeof window !== 'undefined') {
 }
 
 .dropdown-trigger {
-    background: transparent;
-    border: 1px solid color(TrueWhite, 0.2);
-    color: color(TrueWhite);
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    background: color(AlmostBlack, 0.08);
+    border: 1px solid color(AlmostBlack, 0.3);
+    color: color(AlmostBlack);
+    padding: 0.625rem 1.125rem;
+    border-radius: 6px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
+    gap: 0.625rem;
+    @include typography('body-m');
     transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
 
     &:hover {
-        border-color: color(TrueWhite, 0.4);
-        background: color(TrueWhite, 0.05);
+        border-color: color(AlmostBlack, 0.5);
+        background: color(AlmostBlack, 0.12);
     }
 }
 
 .current-mode {
-    opacity: 0.8;
+    font-weight: 500;
 }
 
 .dropdown-arrow {
-    opacity: 0.5;
+    opacity: 0.6;
     transition: transform 0.2s ease;
     font-size: 0.75rem;
 
@@ -115,11 +116,12 @@ if (typeof window !== 'undefined') {
     position: absolute;
     top: calc(100% + 0.5rem);
     right: 0;
-    background: color(AlmostBlack);
-    border: 1px solid color(TrueWhite, 0.15);
+    background: color(AlmostWhite);
+    border: 1px solid color(AlmostBlack, 0.15);
     border-radius: 4px;
     overflow: hidden;
     min-width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-option {
@@ -128,21 +130,22 @@ if (typeof window !== 'undefined') {
     padding: 0.625rem 1rem;
     background: transparent;
     border: none;
-    color: color(TrueWhite, 0.7);
-    font-size: 0.875rem;
+    color: color(AlmostBlack, 0.7);
+    @include typography('body-s');
     text-align: left;
     cursor: pointer;
     transition: all 0.15s ease;
     white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
 
     &:hover {
-        background: color(TrueWhite, 0.08);
-        color: color(TrueWhite);
+        background: color(AlmostBlack, 0.08);
+        color: color(AlmostBlack);
     }
 
     &.active {
-        color: color(TrueWhite);
-        background: color(TrueWhite, 0.1);
+        color: color(AlmostBlack);
+        background: color(AlmostBlack, 0.1);
     }
 }
 

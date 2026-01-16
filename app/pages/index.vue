@@ -22,9 +22,11 @@
         </template>
 
         <!-- Reflection Mode -->
-        <p v-else-if="currentMode === 'reflection'">
-            {{ reflectionOfTheDay?.reflection }}
-        </p>
+        <template v-else-if="currentMode === 'reflection'">
+            <p class="reflection-header">Today's reflection — {{ reflectionOfTheDay?.topic }}.</p>
+            <div class="reflection-divider"></div>
+            <p class="reflection-text">{{ reflectionOfTheDay?.reflection }}</p>
+        </template>
     </div>
 </template>
 
@@ -41,10 +43,25 @@ import { useGlobalStore } from '~/store/global';
 const MODE_STORAGE_KEY = 'todays-mode';
 
 // DATA
-const { data: quotesData, error: quotesError } = await useSanityQuery(homepageQuery);
-const { data: questionsData, error: questionsError } = await useSanityQuery(questionsQuery);
-const { data: reflectionsData, error: reflectionsError } = await useSanityQuery(reflectionsQuery);
-const { data: meta, error: metaError } = await useSanityQuery(metaQuery('homepage'));
+const { data: rawQuotesData, error: quotesError } = await useSanityQuery(homepageQuery);
+const { data: rawQuestionsData, error: questionsError } = await useSanityQuery(questionsQuery);
+const { data: rawReflectionsData, error: reflectionsError } =
+    await useSanityQuery(reflectionsQuery);
+const { data: rawMeta, error: metaError } = await useSanityQuery(metaQuery('homepage'));
+
+// Normalize Sanity data to fix Pinia hydration issues
+const quotesData = computed(() =>
+    rawQuotesData.value ? JSON.parse(JSON.stringify(rawQuotesData.value)) : []
+);
+const questionsData = computed(() =>
+    rawQuestionsData.value ? JSON.parse(JSON.stringify(rawQuestionsData.value)) : []
+);
+const reflectionsData = computed(() =>
+    rawReflectionsData.value ? JSON.parse(JSON.stringify(rawReflectionsData.value)) : []
+);
+const meta = computed(() =>
+    rawMeta.value ? JSON.parse(JSON.stringify(rawMeta.value)) : undefined
+);
 
 if (quotesError.value) {
     console.error('Error fetching quotes:', quotesError.value);
@@ -60,7 +77,7 @@ if (metaError.value) {
 }
 
 // META
-useMeta(meta?.value?.metaData, quotesData?.value);
+useMeta(meta.value?.metaData, quotesData.value);
 
 // STORE
 const globalStore = useGlobalStore();
@@ -92,19 +109,19 @@ const getDayOfYear = () => {
 
 // COMPUTED
 const quoteOfTheDay = computed(() => {
-    const list = quotesData.value || [];
+    const list = quotesData.value;
     if (!list.length) return undefined;
     return list[getDayOfYear() % list.length];
 });
 
 const questionOfTheDay = computed(() => {
-    const list = questionsData.value || [];
+    const list = questionsData.value;
     if (!list.length) return undefined;
     return list[getDayOfYear() % list.length];
 });
 
 const reflectionOfTheDay = computed(() => {
-    const list = reflectionsData.value || [];
+    const list = reflectionsData.value;
     if (!list.length) return undefined;
     return list[getDayOfYear() % list.length];
 });
@@ -246,5 +263,34 @@ onBeforeUnmount(() => {
 .attribution-location {
     margin-top: 0.25rem;
     opacity: 0.45;
+}
+
+.reflection-header {
+    @include typography('heading-5');
+    margin-bottom: 1.5rem;
+
+    @include laptop-up {
+        @include typography('heading-3');
+    }
+}
+
+.reflection-divider {
+    width: 60px;
+    height: 1px;
+    background: color(AlmostBlack, 0.2);
+    margin: 1.5rem auto;
+
+    @include laptop-up {
+        margin: 2rem auto;
+    }
+}
+
+.reflection-text {
+    @include typography('body-m');
+    max-width: 600px;
+
+    @include laptop-up {
+        @include typography('body-l');
+    }
 }
 </style>

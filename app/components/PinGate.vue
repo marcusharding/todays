@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!isAuthenticated" class="pin-gate">
+    <div v-if="showGate" class="pin-gate" :class="{ 'is-checking': isChecking }">
         <div class="pin-container">
             <input
                 ref="pinInput"
@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
 const CORRECT_PIN = '3160';
 const STORAGE_KEY = 'todays-authenticated';
@@ -28,7 +28,10 @@ const STORAGE_KEY = 'todays-authenticated';
 const pin = ref('');
 const error = ref('');
 const isAuthenticated = ref(false);
+const isChecking = ref(true);
 const pinInput = ref(undefined);
+
+const showGate = computed(() => isChecking.value || !isAuthenticated.value);
 
 const checkPin = () => {
     if (pin.value === CORRECT_PIN) {
@@ -42,11 +45,14 @@ const checkPin = () => {
 };
 
 onMounted(() => {
-    // Check if already authenticated
+    // Check localStorage on client only
     if (localStorage.getItem(STORAGE_KEY) === 'true') {
         isAuthenticated.value = true;
-    } else {
-        // Focus input on mount
+    }
+    isChecking.value = false;
+
+    // Focus input if not authenticated
+    if (!isAuthenticated.value) {
         pinInput.value?.focus();
     }
 });
@@ -61,6 +67,10 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     z-index: 9999;
+
+    &.is-checking .pin-container {
+        opacity: 0;
+    }
 }
 
 .pin-container {
